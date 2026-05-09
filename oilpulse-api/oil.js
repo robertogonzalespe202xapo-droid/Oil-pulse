@@ -1,13 +1,6 @@
-import express from 'express';
-import cors from 'cors';
+export default async function handler(req, res) {
 
-const app = express();
-
-app.use(cors());
-
-const API_KEY = process.env.OIL_API_KEY;
-
-app.get('/api/oil', async (req, res) => {
+    const API_KEY = process.env.OIL_API_KEY;
 
     try {
 
@@ -22,16 +15,14 @@ app.get('/api/oil', async (req, res) => {
 
         const data = await response.json();
 
-        res.json(data);
+        res.status(200).json(data);
 
     } catch (err) {
 
+        console.error(err);
+
         res.status(500).json({
-            error: 'Error obteniendo datos'
+            error: 'Backend error'
         });
     }
-});
-
-app.listen(3000, () => {
-    console.log('Servidor activo');
-});
+}
